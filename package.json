@@ -1,0 +1,28 @@
+{
+  "name": "spill_the_tea",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Wise-394/spill_the_tea#readme",
+  "bugs": {
+    "url": "https://github.com/Wise-394/spill_the_tea/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wise-394/spill_the_tea.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "pg": "^8.20.0"
+  }
+}
