@@ -7,5 +7,9 @@
   </head>
   <body>
     <p>test1</p>
+    <% if(locals.user) {%>
+    <p><%= locals.user.username %></p>
+
+    <% } %>
   </body>
 </html>

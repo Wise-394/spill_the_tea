@@ -4,7 +4,7 @@ export const userQueries = {
   getUserByUsername: async (username) => {
     try {
       const { rows } = await pool.query(
-        `SELECT username, password FROM users WHERE username = $1 LIMIT 1;`,
+        `SELECT * FROM users WHERE username = $1 LIMIT 1;`,
         [username],
       );
       return rows[0];
@@ -27,7 +27,7 @@ export const userQueries = {
     try {
       await pool.query(
         `
-        INSERT INTO users (username, password, member) VALUES ($1, $2, false)`,
+        INSERT INTO users (username, password, member) VALUES ($1, $2, false) `,
         [username, password],
       );
     } catch (err) {
