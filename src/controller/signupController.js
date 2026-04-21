@@ -17,7 +17,7 @@ export const signupController = {
       const hashed = await bcrypt.hash(req.body.password, 10);
       const username = req.body.username;
       await userQueries.insertUser(username, hashed);
-      return res.redirect("/");
+      return res.redirect("/login");
     } catch (err) {
       console.error("unable to signup user, signupController.js", err);
       next(err);

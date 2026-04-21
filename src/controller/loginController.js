@@ -8,7 +8,7 @@ export const loginController = {
     passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
       if (!user) {
-        return res.render("login", [{ error: info.message }]);
+        return res.render("login", { errors: [{ msg: info.message }] });
       }
       if (user) {
         req.logIn(user, (err) => {
