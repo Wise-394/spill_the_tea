@@ -1,10 +1,19 @@
 import bcrypt from "bcryptjs";
 import { userQueries } from "../model/userQueries.js";
 import { validationResult } from "express-validator";
-
 export const signupController = {
   renderSignup: (req, res) => {
     return res.render("signup");
+  },
+
+  checkIfUserExist: async (req, res, next) => {
+    const user = await userQueries.getUserByUsername(req.body.username);
+    if (user) {
+      return res.render("signup", {
+        errors: [{ msg: "username already exist" }],
+      });
+    }
+    next();
   },
 
   signupUser: async (req, res, next) => {

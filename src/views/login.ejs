@@ -13,10 +13,8 @@
 
       <label for="password">password</label>
       <input type="password" name="password" id="password" />
-      <% if(locals.errors) { %>
-      <% locals.errors.forEach(error => { %>
-      <p><%= error.msg %></p>
-      <% }) %>
+      <% if(locals.error) { %>
+      <p><%= locals.error %></p>
       <% } %>
 
       <button type="submit">log in</button>
