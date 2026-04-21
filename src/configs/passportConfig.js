@@ -30,7 +30,7 @@ export default function passportSetup() {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = userQueries.getUserById(id);
+      const user = await userQueries.getUserById(id);
       done(null, user);
     } catch (err) {
       console.error("unable to deserializeUser, passportConfig.js", err);
