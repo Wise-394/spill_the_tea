@@ -37,4 +37,15 @@ export const userQueries = {
       );
     }
   },
+  enableMemberOnUserById: async (id) => {
+    try {
+      await pool.query(
+        `
+        UPDATE users SET member = true WHERE id = $1`,
+        [id],
+      );
+    } catch (err) {
+      console.error("unable to member the user, userQueries.js", err);
+    }
+  },
 };

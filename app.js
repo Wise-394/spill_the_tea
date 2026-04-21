@@ -7,6 +7,7 @@ import createTablesIfNotExists from "./src/model/InitDatabase.js";
 import { indexRouter } from "./src/routes/indexRouter.js";
 import { signupRouter } from "./src/routes/signupRouter.js";
 import { loginRouter } from "./src/routes/loginRouter.js";
+import { memberRouter } from "./src/routes/memberRouter.js";
 const app = express();
 const PORT = 3000;
 const passport = passportSetup(pool);
@@ -34,6 +35,8 @@ app.use((req, res) => {
     errors: "Oops! The page you're looking for doesn't exist",
   });
 });
+app.use("/member", memberRouter);
+
 app.use((err, req, res, _next) => {
   console.error(err);
   res.status(500).render("error", { errors: err });

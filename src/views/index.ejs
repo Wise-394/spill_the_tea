@@ -6,10 +6,14 @@
     <title>Document</title>
   </head>
   <body>
-    <p>test1</p>
-    <% if(locals.user) {%>
-    <p><%= locals.user.username %></p>
-
+    <% if(locals.user) { %>
+    <p>Welcome <%= locals.user.username %></p>
+    <% } else { %>
+    <p>Guest</p>
     <% } %>
+
+    <% if(locals.user && !locals.user.member) {%>
+    <button>member</button>
+    <%} %>
   </body>
 </html>

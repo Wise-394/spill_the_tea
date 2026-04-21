@@ -20,7 +20,7 @@ export const signupController = {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).render("signup", { errors: errors.array() });
+        return res.render("signup", { errors: errors.array() });
       }
 
       const hashed = await bcrypt.hash(req.body.password, 10);
