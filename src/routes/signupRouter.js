@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { signupController } from "../controller/signupController.js";
-import { validateUserInput } from "../controller/validation/validateUserInput.js";
+import {
+  renderSignup,
+  checkIfUserExist,
+  signupUser,
+} from "../controller/signupController.js";
+import { validateSignup } from "../controller/validation/validateUserInput.js";
+import { preventSignUpIfSessionExist } from "../helper/helpers.js";
 
 export const signupRouter = Router();
 
-signupRouter.get("/", signupController.renderSignup);
-signupRouter.post(
-  "/",
-  validateUserInput.signup,
-  signupController.checkIfUserExist,
-  signupController.signupUser,
-);
+signupRouter.get("/", preventSignUpIfSessionExist, renderSignup);
+signupRouter.post("/", validateSignup, checkIfUserExist, signupUser);

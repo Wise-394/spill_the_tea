@@ -1,13 +1,13 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { userQueries } from "../model/userQueries.js";
+import { getUserByUsername, getUserById } from "../model/userQueries.js";
 import bcrypt from "bcryptjs";
 
 export default function passportSetup() {
   passport.use(
     new Strategy(async (username, password, done) => {
       try {
-        const user = await userQueries.getUserByUsername(username);
+        const user = await getUserByUsername(username);
 
         if (!user) {
           return done(null, false, { message: "username does not exist" });
@@ -30,7 +30,7 @@ export default function passportSetup() {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await userQueries.getUserById(id);
+      const user = await getUserById(id);
       done(null, user);
     } catch (err) {
       console.error("unable to deserializeUser, passportConfig.js", err);
