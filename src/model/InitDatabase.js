@@ -15,7 +15,6 @@ async function createUsersTable() {
         );`);
   } catch (err) {
     console.error("Unable to create users table, initDatabase.js", err);
-    throw err;
   }
 }
 
@@ -24,6 +23,7 @@ async function createMessagesTable() {
     await pool.query(`CREATE TABLE IF NOT EXISTS messages (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
         title TEXT NOT NULL,
+        content TEXT NOT NULL,
         timestamp DATE NOT NULL,
         user_id INT REFERENCES users(id) ON DELETE CASCADE
         );`);

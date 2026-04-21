@@ -15,5 +15,43 @@
     <% if(locals.user && !locals.user.member) {%>
     <button>member</button>
     <%} %>
+
+    <% if (locals.user) { %>
+    <form action="/message" method="POST">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" required />
+
+      <label for="content">Content</label>
+      <textarea name="content" id="content" required></textarea>
+
+      <button type="submit">Post Message</button>
+    </form>
+    <% } %>
+    <hr />
+    <h2>Messages</h2>
+
+    <% if (locals.messages && locals.messages.length > 0) { %>
+    <ul>
+      <% locals.messages.forEach(msg => { %>
+      <li>
+        <strong><%= msg.title %></strong>
+        <p><%= msg.content %></p>
+        <!-- TODO: cant view when not member -->
+        <% if (locals.user ) { %>
+        <small
+          >By:
+          <%= msg.user_id %>
+          on
+          <%= msg.timestamp %></small
+        >
+        <% } else { %>
+        <small>Post by: Anonymous (Become a member to see authors)</small>
+        <% } %>
+      </li>
+      <% }) %>
+    </ul>
+    <% } else { %>
+    <p>No messages yet!</p>
+    <% } %>
   </body>
 </html>

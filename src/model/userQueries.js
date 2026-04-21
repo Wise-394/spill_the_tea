@@ -15,7 +15,7 @@ export const getUserByUsername = async (username) => {
 export const getUserById = async (id) => {
   try {
     const { rows } = await pool.query(
-      `SELECT username, password FROM users WHERE id = $1 LIMIT 1;`,
+      `SELECT * FROM users WHERE id = $1 LIMIT 1;`,
       [id],
     );
     return rows[0];

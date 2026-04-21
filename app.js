@@ -8,6 +8,7 @@ import { indexRouter } from "./src/routes/indexRouter.js";
 import { signupRouter } from "./src/routes/signupRouter.js";
 import { loginRouter } from "./src/routes/loginRouter.js";
 import { memberRouter } from "./src/routes/memberRouter.js";
+import { messageRouter } from "./src/routes/messageRouter.js";
 const app = express();
 const PORT = 3000;
 const passport = passportSetup(pool);
@@ -30,13 +31,15 @@ createTablesIfNotExists();
 app.use("/", indexRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
+app.use("/member", memberRouter);
+app.use("/message", messageRouter);
+
+//ERROR MIDDLEWARES
 app.use((req, res) => {
   res.status(404).render("error", {
     errors: "Oops! The page you're looking for doesn't exist",
   });
 });
-app.use("/member", memberRouter);
-
 app.use((err, req, res, _next) => {
   console.error(err);
   res.status(500).render("error", { errors: err });
