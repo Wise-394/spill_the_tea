@@ -28,6 +28,10 @@ createTablesIfNotExists();
 
 app.use("/", indexRouter);
 app.use("/signup", signupRouter);
+app.use((err, req, res, _next) => {
+  console.error(err);
+  res.status(500).render("error", { err });
+});
 
 app.listen(PORT, (err) => {
   if (err) {
