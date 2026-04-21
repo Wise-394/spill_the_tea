@@ -9,7 +9,7 @@ export const postMessage = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log("todo message controller");
-    // TODO: Message conttroller
+    // TODO: show to dialog the erros(validation)
   }
   const user_id = req.user.id;
   const title = req.body.title;
