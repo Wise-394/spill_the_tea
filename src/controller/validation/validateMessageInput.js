@@ -7,6 +7,6 @@ export const validateMessageInput = [
     .withMessage("title must be within 5-30 characters"),
 
   body("content")
-    .isLength({ min: 5, max: 100 })
-    .withMessage("content must be within 5-100 characters"),
+    .isLength({ min: 5, max: 300 })
+    .withMessage("content must be within 5-300 characters"),
 ];
