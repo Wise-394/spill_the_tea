@@ -15,19 +15,18 @@
 
 ---
 
-## ✨ Features
+✨ Features
 
-- **Anonymous Gossip Feed** — All visitors can browse the gossip board, but authors are hidden from guests. Only members can see who posted what, creating a layer of intrigue and exclusivity
-- **Membership System** — Users can unlock membership by entering a secret passcode, granting them access to author identities and the ability to post
-- **Authentication** — Secure signup and login powered by Passport.js using the local strategy, with persistent sessions so users stay logged in across requests
-- **Password Hashing** — All passwords are hashed with bcrypt before being stored in the database, ensuring user credentials are never stored in plain text
-- **Post Gossip** — Members can create gossip posts with a title and content, which are immediately visible to all visitors on the board
-- **Delete Your Own Posts** — Members can delete posts they authored, with server-side ownership verification to prevent unauthorized deletions
-- **Input Validation & Sanitization** — All form inputs are validated and sanitized server-side using `express-validator` to enforce required fields, correct data types, and protection against XSS attacks
-- **Database Seeding** — Tables and initial gossip data are auto-created and seeded on first run via JS scripts, so the board is never empty on a fresh install
-- **MVC Architecture** — Clean separation of concerns across Models, Views, and Controllers for maintainable and scalable code
-- **Error Handling** — Dedicated error page for graceful handling of unexpected server errors
-
+Anonymous Gossip Feed — All visitors can browse the gossip board, but authors are hidden from guests. Only members can see who posted what, creating a layer of intrigue and exclusivity
+Membership System — Users can unlock membership by entering a secret passcode, granting them access to author identities and the ability to post
+Authentication — Secure signup and login powered by Passport.js using the local strategy, with persistent sessions so users stay logged in across requests
+Password Hashing — All passwords are hashed with bcrypt before being stored in the database, ensuring user credentials are never stored in plain text
+CRUD for Gossip Posts — Members can create and delete gossip posts with server-side ownership verification enforced on every write operation
+Protected Routes — Sensitive routes such as creating, editing, and deleting posts, as well as the membership upgrade page, are protected by authentication middleware. Unauthenticated users are automatically redirected to the login page if they attempt to access them directly
+Input Validation & Sanitization — All form inputs are validated and sanitized server-side using express-validator to enforce required fields, correct data types, and protection against XSS attacks
+Database Seeding — Tables and initial gossip data are auto-created and seeded on first run via JS scripts, so the board is never empty on a fresh install
+MVC Architecture — Clean separation of concerns across Models, Views, and Controllers for maintainable and scalable code
+Error Handling — Dedicated error page for graceful handling of unexpected server errors
 ---
 
 ## 🖼️ Preview
