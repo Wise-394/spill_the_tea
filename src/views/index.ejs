@@ -26,7 +26,8 @@
     <% } %>
 
     <% if(locals.user && locals.user.member) { %>
-    <section>
+    <button id="openMessageDialog">New Message</button>
+    <dialog id="messageDialog">
       <h2>Post a Message</h2>
       <form action="/message" method="POST">
         <label for="title">Title</label>
@@ -37,7 +38,13 @@
 
         <button type="submit">Post Message</button>
       </form>
-    </section>
+      <% if(locals.messageErrors) { %>
+      <% locals.messageErrors.forEach(err => { %>
+      <p><%= err.msg %></p>
+      <% }) %>
+      <% } %>
+      <button id="closeMessageDialog">X</button>
+    </dialog>
     <% } %>
 
     <hr />
@@ -91,6 +98,11 @@
         <button type="submit">Submit</button>
       </form>
     </dialog>
+    <% if(locals.messageErrors) { %>
+    <script>
+      document.querySelector("#messageDialog").showModal();
+    </script>
+    <% } %>
 
     <% if(locals.memberError) { %>
     <script>

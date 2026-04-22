@@ -8,8 +8,10 @@ import { validationResult } from "express-validator";
 export const postMessage = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log("todo message controller");
-    // TODO: show to dialog the erros(validation)
+    return res.render("index", {
+      user: req.user,
+      messageErrors: errors.array(),
+    });
   }
   const user_id = req.user.id;
   const title = req.body.title;
