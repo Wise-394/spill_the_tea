@@ -2,6 +2,7 @@ import {
   insertMessage,
   deleteMessageById,
   getAllMessages,
+  getMessageById,
 } from "../model/messageQueries.js";
 import { validationResult } from "express-validator";
 
@@ -21,8 +22,14 @@ export const postMessage = async (req, res) => {
 };
 
 export const deleteMessage = async (req, res) => {
-  const id = req.query.id;
-  await deleteMessageById(id);
+  const messageId = req.params.id;
+  const message = await getMessageById(messageId);
+
+  if (!message || message.user_id !== req.user.id) {
+    return res.redirect("/");
+  }
+
+  await deleteMessageById(messageId);
   res.redirect("/");
 };
 

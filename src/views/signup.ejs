@@ -3,23 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Sign Up — Spill the Tea</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="login.css" />
   </head>
-  <body>
-    <p>sign up</p>
-    <form action="/signup" method="post">
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" />
+  <body class="auth-page">
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <a class="site-logo" href="/">Spill the Tea</a>
+        <p class="auth-card__tagline">join the gossip circle 🍵</p>
+      </div>
 
-      <label for="password">password</label>
-      <input type="password" name="password" id="password" />
-      <% if(locals.errors) { %>
-      <% locals.errors.forEach(error => { %>
-      <p><%= error.msg %></p>
-      <% }) %>
-      <% } %>
+      <form class="auth-form" action="/signup" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input
+            class="form-input"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="pick a fun name"
+            autocomplete="username"
+            required
+          />
+        </div>
 
-      <button type="submit">Sign Up</button>
-    </form>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input
+            class="form-input"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+
+        <% if(locals.errors) { %>
+        <ul class="form-errors">
+          <% locals.errors.forEach(error => { %>
+          <li class="form-error"><%= error.msg %></li>
+          <% }) %>
+        </ul>
+        <% } %>
+
+        <button class="btn btn--primary btn--full" type="submit">
+          Sign Up
+        </button>
+      </form>
+
+      <p class="auth-card__footer">
+        Already have an account? <a href="/login">Log in here</a>
+      </p>
+    </div>
   </body>
 </html>

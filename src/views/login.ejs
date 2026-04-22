@@ -3,21 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Login — Spill the Tea</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="login.css" />
   </head>
-  <body>
-    <p>log in</p>
-    <form action="/login" method="post">
-      <label for="username">Username</label>
-      <input type="text" name="username" id="username" />
+  <body class="auth-page">
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <a class="site-logo" href="/">Spill the Tea</a>
+        <p class="auth-card__tagline">the tea won't spill itself ☕</p>
+      </div>
 
-      <label for="password">password</label>
-      <input type="password" name="password" id="password" />
-      <% if(locals.error) { %>
-      <p><%= locals.error %></p>
-      <% } %>
+      <form class="auth-form" action="/login" method="POST">
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input
+            class="form-input"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="your username"
+            autocomplete="username"
+            required
+          />
+        </div>
 
-      <button type="submit">log in</button>
-    </form>
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <input
+            class="form-input"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+
+        <% if(locals.error) { %>
+        <p class="form-error"><%= locals.error %></p>
+        <% } %>
+
+        <button class="btn btn--primary btn--full" type="submit">Log In</button>
+      </form>
+
+      <p class="auth-card__footer">
+        No account? <a href="/signup">Sign up here</a>
+      </p>
+    </div>
   </body>
 </html>

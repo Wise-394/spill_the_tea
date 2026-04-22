@@ -3,112 +3,180 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Members Club</title>
+    <title>Spill The Tea</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <nav>
-      <% if(locals.user) { %>
-      <p>
-        Welcome, <strong><%= locals.user.username %></strong>
-      </p>
-      <form action="/logout" method="POST">
-        <button type="submit">Logout</button>
-      </form>
-      <% } else { %>
-      <p>Guest — <a href="/login">Login</a> | <a href="/signup">Sign Up</a></p>
-      <% } %>
-    </nav>
-
-    <hr />
-
-    <% if(locals.user && !locals.user.member) { %>
-    <button id="openMemberDialog">Become a Member</button>
-    <% } %>
-
-    <% if(locals.user && locals.user.member) { %>
-    <button id="openMessageDialog">New Message</button>
-    <dialog id="messageDialog">
-      <h2>Post a Message</h2>
-      <form action="/message" method="POST">
-        <label for="title">Title</label>
-        <input type="text" name="title" id="title" required />
-
-        <label for="content">Content</label>
-        <textarea name="content" id="content" required></textarea>
-
-        <button type="submit">Post Message</button>
-      </form>
-      <% if(locals.messageErrors) { %>
-      <% locals.messageErrors.forEach(err => { %>
-      <p><%= err.msg %></p>
-      <% }) %>
-      <% } %>
-      <button id="closeMessageDialog">X</button>
-    </dialog>
-    <% } %>
-
-    <hr />
-
-    <section>
-      <h2>Messages</h2>
-      <% if(locals.messages && locals.messages.length > 0) { %>
-      <ul>
-        <% locals.messages.forEach(msg => { %>
-        <li>
-          <strong><%= msg.title %></strong>
-          <p><%= msg.content %></p>
+    <header class="site-header">
+      <div class="header-inner">
+        <span class="site-logo">Spill the Tea</span>
+        <nav class="site-nav">
           <% if(locals.user) { %>
-          <small
-            >By:
-            <%= msg.username %>
-            on
-            <%= new Date(msg.timestamp).toLocaleDateString() %></small
+          <span class="nav-greeting"
+            >Welcome, <strong><%= locals.user.username %></strong></span
           >
+          <form action="/logout" method="POST">
+            <button class="btn btn--ghost" type="submit">Logout</button>
+          </form>
           <% } else { %>
-          <small
-            >Posted by: Anonymous — <a href="/login">Login</a> to see
-            authors</small
-          >
+          <a class="btn btn--ghost" href="/login">Login</a>
+          <a class="btn btn--primary" href="/signup">Sign Up</a>
           <% } %>
-        </li>
-        <% }) %>
-      </ul>
-      <% } else { %>
-      <p>No messages yet!</p>
+        </nav>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <% if(locals.user && !locals.user.member) { %>
+      <div class="membership-banner">
+        <p>You're not a member yet. Unlock full access.</p>
+        <button class="btn btn--primary" id="openMemberDialog">
+          Become a Member
+        </button>
+      </div>
       <% } %>
-    </section>
 
-    <dialog id="memberDialog">
-      <form action="/member" method="POST">
-        <h3>Become a Member</h3>
-        <button type="button" id="closeMemberDialog">✕</button>
+      <% if(locals.user && locals.user.member) { %>
+      <div class="messages-toolbar">
+        <button class="btn btn--primary" id="openMessageDialog">
+          + New Message
+        </button>
+      </div>
+      <% } %>
 
-        <label for="memberPassword">Member Password</label>
-        <input
-          type="password"
-          name="memberPassword"
-          id="memberPassword"
-          required
-        />
+      <section class="messages-section">
+        <h2 class="section-title">Messages</h2>
 
-        <% if(locals.memberError) { %>
-        <p class="error"><%= locals.memberError %></p>
+        <% if(locals.messages && locals.messages.length > 0) { %>
+        <ul class="messages-grid">
+          <% locals.messages.forEach(msg => { %>
+          <li class="message-card">
+            <div class="message-card__body">
+              <h3 class="message-card__title"><%= msg.title %></h3>
+              <p class="message-card__content"><%= msg.content %></p>
+            </div>
+            <footer class="message-card__footer">
+              <% if(locals.user) { %>
+              <span class="message-card__meta">
+                By <strong><%= msg.username %></strong> &middot;
+                <%= new Date(msg.timestamp).toLocaleDateString() %>
+              </span>
+              <% } else { %>
+              <span class="message-card__meta">
+                Anonymous &mdash; <a href="/login">Login</a> to see authors
+              </span>
+              <% } %>
+
+              <% if(locals.user && locals.user.id === msg.user_id) { %>
+              <form
+                class="message-card__delete"
+                method="POST"
+                action="/message/<%= msg.id %>/delete"
+              >
+                <button class="btn btn--danger" type="submit">Delete</button>
+              </form>
+              <% } %>
+            </footer>
+          </li>
+          <% }) %>
+        </ul>
+
+        <% } else { %>
+        <div class="messages-empty">
+          <p>No messages yet. Be the first to post!</p>
+        </div>
         <% } %>
+      </section>
+    </main>
 
-        <button type="submit">Submit</button>
-      </form>
+    <!-- New Message Dialog -->
+    <% if(locals.user && locals.user.member) { %>
+    <dialog class="dialog" id="messageDialog">
+      <div class="dialog__inner">
+        <div class="dialog__header">
+          <h2 class="dialog__title">Post a Message</h2>
+          <button class="dialog__close" id="closeMessageDialog" type="button">
+            ✕
+          </button>
+        </div>
+        <form class="dialog__form" action="/message" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="title">Title</label>
+            <input
+              class="form-input"
+              type="text"
+              name="title"
+              id="title"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="content">Content</label>
+            <textarea
+              class="form-input form-input--textarea"
+              name="content"
+              id="content"
+              required
+            ></textarea>
+          </div>
+          <% if(locals.messageErrors) { %>
+          <ul class="form-errors">
+            <% locals.messageErrors.forEach(err => { %>
+            <li class="form-error"><%= err.msg %></li>
+            <% }) %>
+          </ul>
+          <% } %>
+          <button class="btn btn--primary btn--full" type="submit">
+            Post Message
+          </button>
+        </form>
+      </div>
     </dialog>
+    <% } %>
+
+    <!-- Become a Member Dialog -->
+    <dialog class="dialog" id="memberDialog">
+      <div class="dialog__inner">
+        <div class="dialog__header">
+          <h3 class="dialog__title">Become a Member</h3>
+          <button class="dialog__close" id="closeMemberDialog" type="button">
+            ✕
+          </button>
+        </div>
+        <form class="dialog__form" action="/member" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="memberPassword"
+              >Member Password</label
+            >
+            <input
+              class="form-input"
+              type="password"
+              name="memberPassword"
+              id="memberPassword"
+              required
+            />
+          </div>
+          <% if(locals.memberError) { %>
+          <p class="form-error"><%= locals.memberError %></p>
+          <% } %>
+          <button class="btn btn--primary btn--full" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    </dialog>
+
     <% if(locals.messageErrors) { %>
     <script>
       document.querySelector("#messageDialog").showModal();
     </script>
     <% } %>
-
     <% if(locals.memberError) { %>
     <script>
       document.querySelector("#memberDialog").showModal();
     </script>
     <% } %>
+
     <script src="index.js"></script>
   </body>
 </html>

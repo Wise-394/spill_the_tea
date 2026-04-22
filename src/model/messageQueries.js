@@ -12,6 +12,18 @@ export const insertMessage = async (title, content, user_id) => {
   }
 };
 
+export const getMessageById = async (id) => {
+  try {
+    const { rows } = await pool.query("SELECT * FROM messages WHERE id = $1", [
+      id,
+    ]);
+    return rows[0];
+  } catch (err) {
+    console.error("unable to get message by id, messageQueries.js", err);
+    throw err;
+  }
+};
+
 export const getAllMessages = async () => {
   try {
     const { rows } = await pool.query(

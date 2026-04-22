@@ -3,11 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Oops — Spill the Tea</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="login.css" />
   </head>
-  <body>
-    <p>Something went wrong</p>
-    <p>error details:</p>
-    <P> <%= locals.errors %></P>
+  <body class="auth-page">
+    <div class="auth-card">
+      <div class="auth-card__header">
+        <a class="site-logo" href="/">Spill the Tea</a>
+        <p class="auth-card__tagline">oop, something spilled</p>
+      </div>
+
+      <div class="auth-form">
+        <p
+          style="
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            color: var(--ink);
+          "
+        >
+          Something went wrong
+        </p>
+        <% if(locals.errors) { %>
+        <p class="form-error"><%= locals.errors %></p>
+        <% } %>
+        <a class="btn btn--primary btn--full" href="/">Go Back Home</a>
+      </div>
+    </div>
   </body>
 </html>
