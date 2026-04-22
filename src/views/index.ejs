@@ -3,55 +3,100 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Members Club</title>
   </head>
   <body>
-    <% if(locals.user) { %>
-    <p>Welcome <%= locals.user.username %></p>
-    <% } else { %>
-    <p>Guest</p>
-    <% } %>
+    <nav>
+      <% if(locals.user) { %>
+      <p>
+        Welcome, <strong><%= locals.user.username %></strong>
+      </p>
+      <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+      </form>
+      <% } else { %>
+      <p>Guest — <a href="/login">Login</a> | <a href="/signup">Sign Up</a></p>
+      <% } %>
+    </nav>
 
-    <% if(locals.user && !locals.user.member) {%>
-    <button>member</button>
-    <%} %>
-
-    <% if (locals.user) { %>
-    <form action="/message" method="POST">
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title" required />
-
-      <label for="content">Content</label>
-      <textarea name="content" id="content" required></textarea>
-
-      <button type="submit">Post Message</button>
-    </form>
-    <% } %>
     <hr />
-    <h2>Messages</h2>
 
-    <% if (locals.messages && locals.messages.length > 0) { %>
-    <ul>
-      <% locals.messages.forEach(msg => { %>
-      <li>
-        <strong><%= msg.title %></strong>
-        <p><%= msg.content %></p>
-        <!-- TODO: cant view when not member -->
-        <% if (locals.user ) { %>
-        <small
-          >By:
-          <%= msg.username %>
-          on
-          <%= msg.timestamp %></small
-        >
-        <% } else { %>
-        <small>Post by: Anonymous (Become a member to see authors)</small>
-        <% } %>
-      </li>
-      <% }) %>
-    </ul>
-    <% } else { %>
-    <p>No messages yet!</p>
+    <% if(locals.user && !locals.user.member) { %>
+    <button id="openMemberDialog">Become a Member</button>
     <% } %>
+
+    <% if(locals.user && locals.user.member) { %>
+    <section>
+      <h2>Post a Message</h2>
+      <form action="/message" method="POST">
+        <label for="title">Title</label>
+        <input type="text" name="title" id="title" required />
+
+        <label for="content">Content</label>
+        <textarea name="content" id="content" required></textarea>
+
+        <button type="submit">Post Message</button>
+      </form>
+    </section>
+    <% } %>
+
+    <hr />
+
+    <section>
+      <h2>Messages</h2>
+      <% if(locals.messages && locals.messages.length > 0) { %>
+      <ul>
+        <% locals.messages.forEach(msg => { %>
+        <li>
+          <strong><%= msg.title %></strong>
+          <p><%= msg.content %></p>
+          <% if(locals.user) { %>
+          <small
+            >By:
+            <%= msg.username %>
+            on
+            <%= new Date(msg.timestamp).toLocaleDateString() %></small
+          >
+          <% } else { %>
+          <small
+            >Posted by: Anonymous — <a href="/login">Login</a> to see
+            authors</small
+          >
+          <% } %>
+        </li>
+        <% }) %>
+      </ul>
+      <% } else { %>
+      <p>No messages yet!</p>
+      <% } %>
+    </section>
+
+    <dialog id="memberDialog">
+      <form action="/member" method="POST">
+        <h3>Become a Member</h3>
+        <button type="button" id="closeMemberDialog">✕</button>
+
+        <label for="memberPassword">Member Password</label>
+        <input
+          type="password"
+          name="memberPassword"
+          id="memberPassword"
+          required
+        />
+
+        <% if(locals.memberError) { %>
+        <p class="error"><%= locals.memberError %></p>
+        <% } %>
+
+        <button type="submit">Submit</button>
+      </form>
+    </dialog>
+
+    <% if(locals.memberError) { %>
+    <script>
+      document.querySelector("#memberDialog").showModal();
+    </script>
+    <% } %>
+    <script src="index.js"></script>
   </body>
 </html>

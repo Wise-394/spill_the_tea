@@ -9,6 +9,7 @@ import { signupRouter } from "./src/routes/signupRouter.js";
 import { loginRouter } from "./src/routes/loginRouter.js";
 import { memberRouter } from "./src/routes/memberRouter.js";
 import { messageRouter } from "./src/routes/messageRouter.js";
+import { logoutRouter } from "./src/routes/logoutRouter.js";
 const app = express();
 const PORT = 3000;
 const passport = passportSetup(pool);
@@ -33,6 +34,7 @@ app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
 app.use("/member", memberRouter);
 app.use("/message", messageRouter);
+app.use("/logout", logoutRouter);
 
 //ERROR MIDDLEWARES
 app.use((req, res) => {

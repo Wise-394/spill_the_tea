@@ -12,4 +12,8 @@ export default defineConfig([
       "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     },
   },
+  {
+    files: ["public/**/*.js"],
+    languageOptions: { globals: globals.browser },
+  },
 ]);
