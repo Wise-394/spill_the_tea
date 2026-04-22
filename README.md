@@ -2,7 +2,7 @@
 
 # ☕ Spill the Tea
 
-**A members-only anonymous gossip board where guests can read the tea but only members know who spilled it. Built with a classic MVC backend stack.**
+**A members-only anonymous gossip board where guests can read the tea but only members know who spilled it. Built as a backend learning project focused on authentication, authorization, session management, and MVC architecture.**
 
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
