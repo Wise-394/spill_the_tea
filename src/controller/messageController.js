@@ -25,10 +25,19 @@ export const deleteMessage = async (req, res) => {
 };
 
 export const getMessages = async (req, res, next) => {
-  if (!req.isAuthenticated()) {
-    //TODO remove/ change to anonymous the author when not authenticated
+  try {
+    let messages = await getAllMessages();
+    if (!req.isAuthenticated()) {
+      messages = messages.map((message) => ({
+        ...message,
+        author: "anonymous",
+      }));
+    }
+
+    res.locals.messages = messages;
+    next();
+  } catch (err) {
+    console.error("Unable to get messages, messageController", err);
+    next(err);
   }
-  const messages = await getAllMessages();
-  res.locals.messages = messages;
-  next();
 };

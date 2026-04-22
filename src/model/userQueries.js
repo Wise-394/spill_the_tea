@@ -9,6 +9,7 @@ export const getUserByUsername = async (username) => {
     return rows[0];
   } catch (err) {
     console.error("unable to get user by username, userQueries.js", err);
+    throw err;
   }
 };
 
@@ -21,6 +22,7 @@ export const getUserById = async (id) => {
     return rows[0];
   } catch (err) {
     console.error("unable to get user id, userQueries.js", err);
+    throw err;
   }
 };
 
@@ -35,6 +37,7 @@ export const insertUser = async (username, password) => {
       "unable to insert username and password, userQueries.js",
       err,
     );
+    throw err;
   }
 };
 
@@ -43,5 +46,6 @@ export const enableMemberOnUserById = async (id) => {
     await pool.query(`UPDATE users SET member = true WHERE id = $1`, [id]);
   } catch (err) {
     console.error("unable to member the user, userQueries.js", err);
+    throw err;
   }
 };
